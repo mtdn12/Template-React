@@ -1,4 +1,4 @@
-import { put, call, all, takeLatest, select } from 'redux-saga/effects'
+import { put, call, takeLatest, select } from 'redux-saga/effects'
 import { ProductActions, ProductTypes } from 'src/Stores/Product/Actions'
 import { getFilter } from './Selectors'
 import { NotificationActions } from 'src/Stores/Notification/Actions'

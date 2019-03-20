@@ -32,7 +32,7 @@ export const getListProduct = filter => {
         totalCount: products.length,
         totalPages: listItems.length,
       })
-    }, 2000)
+    }, 1000)
   })
 }
 
@@ -45,7 +45,7 @@ export const deleteProduct = id => {
       resolve({
         result: 'success',
       })
-    }, 2000)
+    }, 1000)
   })
 }
 // Get item detail

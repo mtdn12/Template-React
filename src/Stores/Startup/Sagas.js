@@ -1,4 +1,4 @@
-import { put, all, takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import { StartupTypes } from 'src/Stores/Startup/Actions'
 import { push } from 'connected-react-router'
 

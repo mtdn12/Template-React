@@ -1,7 +1,5 @@
 import { camelizeKeys } from 'humps'
 
-import apiClient from './'
-
 function fetchAuthentication(tokenId) {
   // Simulate an error 50% of the time just for testing purposes
   // if (Math.random() > 0.5) {

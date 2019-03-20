@@ -10,7 +10,7 @@ export const apiClient = create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  timeout: 3000,
+  timeout: 2000,
 })
 
 export default apiClient

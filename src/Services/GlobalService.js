@@ -1,5 +1,4 @@
 import { camelizeKeys } from 'humps'
-import apiClient from './'
 
 function fetchConfig() {
   return camelizeKeys(
