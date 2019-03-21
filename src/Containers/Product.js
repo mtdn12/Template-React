@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useContext, useEffect } from 'react'
+import { connect, ReactReduxContext } from 'react-redux'
 import { compose } from 'redux'
+import injectSaga from '../Utils/injectSaga'
 import Product from 'src/Components/pages/Product'
+import productSaga from '../Stores/Product/Sagas'
 import { ProductActions } from '../Stores/Product/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import {
@@ -12,33 +14,39 @@ import {
   getTotalPages,
 } from '../Stores/Product/Selectors'
 
-class ProductContainer extends Component {
-  componentDidMount() {
-    this.props.handleGetListProduct(this.props.filter.toJS())
-  }
-  componentWillUnmount() {
-    this.props.handleClearProducts()
-  }
-  handleDeleteProduct = id => () => {
-    this.props.handleOpenModal('ConfirmationDialog', {
+const ProductContainer = props => {
+  const store = useContext(ReactReduxContext)
+  // Inject sagas for this component
+  injectSaga(store.store, {
+    product: 'product',
+    saga: productSaga,
+  })
+  useEffect(() => {
+    props.handleGetListProduct(props.filter.toJS())
+    return () => {
+      props.handleClearProducts()
+    }
+  }, [props.filter])
+  // handle delete product
+  const handleDeleteProduct = id => () => {
+    props.handleOpenModal('ConfirmationDialog', {
       title: 'Delete Product',
       content: 'Do You want to delete Product',
-      onConfirm: () => this.props.deleteProduct(id),
+      onConfirm: () => props.deleteProduct(id),
     })
   }
-  handleSetFilter = async (name, value) => {
-    await this.props.setFilter(name, value)
-    this.props.handleGetListProduct(this.props.filter.toJS())
+  const handleSetFilter = async (name, value) => {
+    await props.setFilter(name, value)
+    props.handleGetListProduct(props.filter.toJS())
   }
-  render() {
-    return (
-      <Product
-        handleDeleteProduct={this.handleDeleteProduct}
-        handleSetFilter={this.handleSetFilter}
-        {...this.props}
-      />
-    )
-  }
+
+  return (
+    <Product
+      handleDeleteProduct={handleDeleteProduct}
+      handleSetFilter={handleSetFilter}
+      {...props}
+    />
+  )
 }
 
 const mapStateToProps = state => ({

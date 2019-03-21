@@ -1,4 +1,4 @@
-import { put, call, takeLatest, select } from 'redux-saga/effects'
+import { put, call, takeLatest, select, all } from 'redux-saga/effects'
 import { ProductActions, ProductTypes } from 'src/Stores/Product/Actions'
 import { getFilter } from './Selectors'
 import { NotificationActions } from 'src/Stores/Notification/Actions'
@@ -128,10 +128,12 @@ function* editItemWorker({ id, values }) {
   }
 }
 
-export default [
-  takeLatest(ProductTypes.GET_ITEMS_REQUEST, getListProductWorker),
-  takeLatest(ProductTypes.DELETE_ITEM_REQUEST, deleteItemWorker),
-  takeLatest(ProductTypes.CREATE_ITEM_REQUEST, createItemWorker),
-  takeLatest(ProductTypes.EDIT_ITEM_REQUEST, editItemWorker),
-  takeLatest(ProductTypes.GET_ITEM_REQUEST, getItemDetailWorker),
-]
+export default function* watcher() {
+  yield all([
+    takeLatest(ProductTypes.GET_ITEMS_REQUEST, getListProductWorker),
+    takeLatest(ProductTypes.DELETE_ITEM_REQUEST, deleteItemWorker),
+    takeLatest(ProductTypes.CREATE_ITEM_REQUEST, createItemWorker),
+    takeLatest(ProductTypes.EDIT_ITEM_REQUEST, editItemWorker),
+    takeLatest(ProductTypes.GET_ITEM_REQUEST, getItemDetailWorker),
+  ])
+}

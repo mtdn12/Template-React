@@ -17,14 +17,14 @@ const history = createHashHistory()
 
 async function init() {
   // const store = await configureStore(initialState, history)
-  const { store, persistor } = createStore(history)
+  const store = createStore(history)
 
   const MOUNT_NODE = document.getElementById('root')
 
   const render = () =>
     ReactDOM.render(
       <Provider store={store}>
-        <PersistGate loading={<div />} persistor={persistor}>
+        <PersistGate loading={<div />} persistor={store.persistor}>
           <ConnectedRouter history={history}>
             <App />
           </ConnectedRouter>

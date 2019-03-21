@@ -40,4 +40,6 @@ function* fetchAuthentication({ response }) {
     )
   }
 }
-export default [takeLatest(AuthTypes.FETCH_AUTHENTICATION, fetchAuthentication)]
+export default function* watcher() {
+  yield all([takeLatest(AuthTypes.FETCH_AUTHENTICATION, fetchAuthentication)])
+}

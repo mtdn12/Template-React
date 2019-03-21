@@ -23,4 +23,6 @@ function* fetchConfig() {
   }
 }
 
-export default [takeLatest(GlobalTypes.GET_CONFIG_REQUEST, fetchConfig)]
+export default function* watcher() {
+  yield all([takeLatest(GlobalTypes.GET_CONFIG_REQUEST, fetchConfig)])
+}

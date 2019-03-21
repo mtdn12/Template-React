@@ -7,7 +7,9 @@ import immutableTransform from 'redux-persist-transform-immutable'
 
 import createRootReducer from './reducers'
 import storage from 'redux-persist/lib/storage'
-import rootSaga from './sagas'
+import authSaga from './Authentication/Sagas'
+import globalSaga from './Global/Sagas'
+import startupSaga from './Startup/Sagas'
 
 const persistConfig = {
   transforms: [immutableTransform()],
@@ -43,9 +45,18 @@ const createRootStore = history => {
   const persistedReducer = persistReducer(persistConfig, rootReducer)
   const store = createStore(persistedReducer, composeEnhancers(...enhancers))
   const persistor = persistStore(store)
-  // Run root sagas
-  sagaMiddleware.run(rootSaga)
-  return { store, persistor }
+  // Run sagas
+  store.injectedSagas = []
+  store.runSaga = sagaMiddleware.run
+  store.injectedSagas.push('startup')
+  store.runSaga(startupSaga)
+  store.injectedSagas.push('global')
+  store.runSaga(globalSaga)
+  store.injectedSagas.push('auth')
+  store.runSaga(authSaga)
+  // Persitor
+  store.persistor = persistor
+  return store
 }
 
 export default createRootStore
