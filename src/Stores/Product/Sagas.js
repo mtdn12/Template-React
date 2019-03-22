@@ -11,6 +11,7 @@ import {
   getItem,
 } from '../../Services/ProductService'
 import { push } from 'connected-react-router'
+import sagaRegistry from '../Sagas/SagaRegistry'
 
 function* getListProductWorker({ filter }) {
   try {
@@ -128,7 +129,7 @@ function* editItemWorker({ id, values }) {
   }
 }
 
-export default function* watcher() {
+function* watcher() {
   yield all([
     takeLatest(ProductTypes.GET_ITEMS_REQUEST, getListProductWorker),
     takeLatest(ProductTypes.DELETE_ITEM_REQUEST, deleteItemWorker),
@@ -137,3 +138,6 @@ export default function* watcher() {
     takeLatest(ProductTypes.GET_ITEM_REQUEST, getItemDetailWorker),
   ])
 }
+sagaRegistry.register('product', watcher)
+
+export default watcher

@@ -4,9 +4,12 @@
  * @see https://redux.js.org/basics/reducers
  */
 
-import { INITIAL_STATE } from './InitialState'
+import INITIAL_STATE from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { GlobalTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
+
+let reducerName = 'global'
 
 export const showHideConfirmDialog = (state = INITIAL_STATE, { show, id }) =>
   state.merge({
@@ -36,9 +39,11 @@ export const fetchConfigFailure = (state = INITIAL_STATE) =>
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
-export default createReducer(INITIAL_STATE, {
+const reducer = createReducer(INITIAL_STATE, {
   [GlobalTypes.SHOW_HIDE_CONFIRM_DIALOG]: showHideConfirmDialog,
   [GlobalTypes.GET_CONFIG_REQUEST]: fetchConfigRequest,
   [GlobalTypes.GET_CONFIG_SUCCESS]: fetchConfigsuccess,
   [GlobalTypes.GET_CONFIG_FAILURE]: fetchConfigFailure,
 })
+
+export default reducer

@@ -3,7 +3,7 @@ import { Map } from 'immutable'
 /**
  * The initial values for the redux state.
  */
-export const INITIAL_STATE = Map({
+const INITIAL_STATE = Map({
   showHideConfirmDialog: false,
   showHideConfirmDialogId: 0,
   isLoadingConfig: false,
@@ -12,3 +12,5 @@ export const INITIAL_STATE = Map({
   categories: [], // sample data
   subCategories: [], // sample data
 })
+
+export default INITIAL_STATE

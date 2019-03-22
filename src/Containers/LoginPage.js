@@ -3,7 +3,7 @@ import { object } from 'prop-types'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { AuthActions } from 'src/Stores/Authentication/Actions'
-
+import '../Stores/Authentication/Reducers'
 import Login from 'src/Components/pages/Login'
 
 const LoginPageContainer = ({ userData, location, ...props }) => {

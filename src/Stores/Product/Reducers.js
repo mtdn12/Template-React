@@ -1,9 +1,11 @@
 import { fromJS } from 'immutable'
 
-import { INITIAL_STATE } from './InitialState'
+import INITIAL_STATE from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { ProductTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
 
+let reducerName = 'product'
 const showLoadingItem = state => state.set('isLoadingItem', true)
 const hideLoadingItem = state => state.set('isLoadingItem', false)
 
@@ -60,4 +62,5 @@ const reducer = createReducer(INITIAL_STATE, {
   [ProductTypes.EDIT_ITEM_FAILURE]: hideLoadingAction,
 })
 
+reducerRegistry.register(reducerName, reducer)
 export default reducer

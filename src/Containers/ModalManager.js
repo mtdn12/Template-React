@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import '../Stores/Modal/Reducers'
 import { ModalActions } from 'src/Stores/Modal/Actions'
 import { getModal, getLoadingAction } from 'src/Stores/Modal/Selectors'
 import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'

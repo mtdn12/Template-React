@@ -5,9 +5,12 @@
  */
 import { fromJS } from 'immutable'
 
-import { INITIAL_STATE } from './InitialState'
+import INITIAL_STATE from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { ModalTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
+
+let reducerName = 'modal'
 
 // Set modal
 const setModal = (state, { modalType, modalProps }) =>
@@ -34,5 +37,6 @@ const reducer = createReducer(INITIAL_STATE, {
   [ModalTypes.SHOW_LOADING_ACTION]: showLoadingAction,
   [ModalTypes.HIDE_LOADING_ACTION]: hideLoadingAction,
 })
+reducerRegistry.register(reducerName, reducer)
 
 export default reducer

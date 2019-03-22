@@ -4,9 +4,12 @@
  * @see https://redux.js.org/basics/reducers
  */
 
-import { INITIAL_STATE } from './InitialState'
+import INITIAL_STATE from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { AuthTypes } from './Actions'
+import reducerRegistry from '../Reducers/ReducerRegistry'
+
+let reducerName = 'auth'
 
 export const fetchAuthenticationLoading = (state = INITIAL_STATE) =>
   state.merge({
@@ -34,11 +37,18 @@ export const fetchAuthenticationFailure = (
     authenticationErrorMessage: errorMessage,
   })
 
+// Log out
+export const doLogout = (state = INITIAL_STATE) => INITIAL_STATE
+
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
-export default createReducer(INITIAL_STATE, {
+const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.FETCH_AUTHENTICATION_LOADING]: fetchAuthenticationLoading,
   [AuthTypes.FETCH_AUTHENTICATION_SUCCESS]: fetchAuthenticationSuccess,
   [AuthTypes.FETCH_AUTHENTICATION_FAILURE]: fetchAuthenticationFailure,
+  // do log out
+  [AuthTypes.DO_LOGOUT]: doLogout,
 })
+
+export default reducer

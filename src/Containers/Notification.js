@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { PropTypes } from 'prop-types'
 import { compose } from 'redux'
 import { NotificationActions } from 'src/Stores/Notification/Actions'
-
+import '../Stores/Notification/Reducers'
 import Notification from 'src/Components/organisms/Notification'
 
 class NotificationContainer extends React.Component {

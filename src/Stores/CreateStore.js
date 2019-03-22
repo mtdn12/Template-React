@@ -4,12 +4,18 @@ import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router/immutable'
 import { persistReducer, persistStore } from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
+import { combine, initialState } from './Reducers/index'
 
-import createRootReducer from './reducers'
 import storage from 'redux-persist/lib/storage'
+// Import Saga and register saga to register static sagas
+import sagaRegistry from './Sagas/SagaRegistry'
 import authSaga from './Authentication/Sagas'
 import globalSaga from './Global/Sagas'
 import startupSaga from './Startup/Sagas'
+// Import reducer to register static reducer
+import reducerRegistry from './Reducers/ReducerRegistry'
+import authReducer from '../Stores/Authentication/Reducers'
+import globalReducer from '../Stores/Global/Reducers'
 
 const persistConfig = {
   transforms: [immutableTransform()],
@@ -37,25 +43,33 @@ const createRootStore = history => {
   ) {
     composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   }
-  const extrasReducers = {
-    router: connectRouter(history),
-  }
-  const rootReducer = createRootReducer(extrasReducers)
+  // const rootReducer = createRootReducer()
+  const rootReducer = combine(reducerRegistry.getReducers())
   // Redux persist
   const persistedReducer = persistReducer(persistConfig, rootReducer)
-  const store = createStore(persistedReducer, composeEnhancers(...enhancers))
+  const store = createStore(
+    persistedReducer,
+    initialState,
+    composeEnhancers(...enhancers)
+  )
   const persistor = persistStore(store)
-  // Run sagas
-  store.injectedSagas = []
-  store.runSaga = sagaMiddleware.run
-  store.injectedSagas.push('startup')
-  store.runSaga(startupSaga)
-  store.injectedSagas.push('global')
-  store.runSaga(globalSaga)
-  store.injectedSagas.push('auth')
-  store.runSaga(authSaga)
   // Persitor
   store.persistor = persistor
+  // Run sagas
+  // Register saga change listener
+  sagaRegistry.setChangeListener(saga => {
+    sagaMiddleware.run(saga)
+  })
+  sagaRegistry.register('startup', startupSaga)
+  sagaRegistry.register('global', globalSaga)
+  sagaRegistry.register('auth', authSaga)
+  // Register reducer change lítener
+  reducerRegistry.setChangeListener(reducers => {
+    store.replaceReducer(persistReducer(persistConfig, combine(reducers)))
+  })
+  reducerRegistry.register('router', connectRouter(history))
+  reducerRegistry.register('auth', authReducer)
+  reducerRegistry.register('global', globalReducer)
   return store
 }
 

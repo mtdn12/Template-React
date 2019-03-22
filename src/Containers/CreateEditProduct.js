@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import CreateEditProduct from 'src/Components/pages/CreateEditProduct'
-
 import { ProductActions, ProductTypes } from '../Stores/Product/Actions'
 import { getFormItem, getLoadingAction } from '../Stores/Product/Selectors'
 

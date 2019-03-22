@@ -10,6 +10,7 @@
     "core-js": "^3.0.0",
     "formik": "^1.5.1",
     "history": "^4.7.2",
+    "hoist-non-react-statics": "^3.3.0",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "jwt-decode": "^2.2.0",
@@ -36,7 +37,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "export GENERATE_SOURCEMAP=false && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

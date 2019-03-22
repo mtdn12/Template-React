@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react'
-import { connect, ReactReduxContext } from 'react-redux'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
-import injectSaga from '../Utils/injectSaga'
 import Product from 'src/Components/pages/Product'
-import productSaga from '../Stores/Product/Sagas'
+import '../Stores/Product/Sagas'
+import '../Stores/Product/Reducers'
 import { ProductActions } from '../Stores/Product/Actions'
 import { ModalActions } from '../Stores/Modal/Actions'
 import {
@@ -15,12 +15,6 @@ import {
 } from '../Stores/Product/Selectors'
 
 const ProductContainer = props => {
-  const store = useContext(ReactReduxContext)
-  // Inject sagas for this component
-  injectSaga(store.store, {
-    product: 'product',
-    saga: productSaga,
-  })
   useEffect(() => {
     props.handleGetListProduct(props.filter.toJS())
     return () => {
@@ -75,5 +69,9 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+// const withProductReducer = withReducer({
+//   key: 'product',
+//   reducer: productReducer,
+// })
 
 export default compose(withConnect)(ProductContainer)

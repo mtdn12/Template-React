@@ -6,6 +6,7 @@ import AnnouncementTemplate from '../../templates/AnnouncementTemplate'
 
 const LoadingPage = props => {
   if (props.error) {
+    console.log(props.error)
     throw new Error(`Couldn't load LoadingPage`)
   }
   return (
