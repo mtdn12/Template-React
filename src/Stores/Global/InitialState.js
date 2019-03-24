@@ -3,7 +3,9 @@ import { Map } from 'immutable'
 /**
  * The initial values for the redux state.
  */
-const INITIAL_STATE = Map({
+export const MODULE_NAME = 'global'
+
+export const INITIAL_STATE = Map({
   showHideConfirmDialog: false,
   showHideConfirmDialogId: 0,
   isLoadingConfig: false,

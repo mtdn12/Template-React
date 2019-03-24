@@ -1,15 +1,6 @@
-/**
- * Reducers specify how the application's state changes in response to actions sent to the store.
- *
- * @see https://redux.js.org/basics/reducers
- */
-
-import INITIAL_STATE from './InitialState'
+import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { GlobalTypes } from './Actions'
-import reducerRegistry from '../Reducers/ReducerRegistry'
-
-let reducerName = 'global'
 
 export const showHideConfirmDialog = (state = INITIAL_STATE, { show, id }) =>
   state.merge({

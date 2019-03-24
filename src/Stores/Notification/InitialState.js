@@ -3,11 +3,11 @@ import { Map } from 'immutable'
 /**
  * The initial values for the redux state.
  */
-const INITIAL_STATE = Map({
+export const MODULE_NAME = 'notification'
+
+export const INITIAL_STATE = Map({
   title: '',
   message: '',
   open: false,
   color: 'blue',
 })
-
-export default INITIAL_STATE

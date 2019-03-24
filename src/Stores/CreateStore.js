@@ -16,6 +16,10 @@ import startupSaga from './Startup/Sagas'
 import reducerRegistry from './Reducers/ReducerRegistry'
 import authReducer from '../Stores/Authentication/Reducers'
 import globalReducer from '../Stores/Global/Reducers'
+// Import module name
+import { MODULE_NAME as authName } from './Authentication/InitialState'
+import { MODULE_NAME as startupName } from './Startup/InitialState'
+import { MODULE_NAME as globalName } from './Global/InitialState'
 
 const persistConfig = {
   transforms: [immutableTransform()],
@@ -60,16 +64,16 @@ const createRootStore = history => {
   sagaRegistry.setChangeListener(saga => {
     sagaMiddleware.run(saga)
   })
-  sagaRegistry.register('startup', startupSaga)
-  sagaRegistry.register('global', globalSaga)
-  sagaRegistry.register('auth', authSaga)
+  sagaRegistry.register(startupName, startupSaga)
+  sagaRegistry.register(globalName, globalSaga)
+  sagaRegistry.register(authName, authSaga)
   // Register reducer change lítener
   reducerRegistry.setChangeListener(reducers => {
     store.replaceReducer(persistReducer(persistConfig, combine(reducers)))
   })
   reducerRegistry.register('router', connectRouter(history))
-  reducerRegistry.register('auth', authReducer)
-  reducerRegistry.register('global', globalReducer)
+  reducerRegistry.register(authName, authReducer)
+  reducerRegistry.register(globalName, globalReducer)
   return store
 }
 

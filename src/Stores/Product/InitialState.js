@@ -3,7 +3,9 @@ import { fromJS } from 'immutable'
 /**
  * The initial values for the redux state.
  */
-const INITIAL_STATE = fromJS({
+export const MODULE_NAME = 'product'
+
+export const INITIAL_STATE = fromJS({
   items: [],
   itemDetail: {},
   formItem: {
@@ -21,5 +23,3 @@ const INITIAL_STATE = fromJS({
   totalCount: 0,
   totalPages: 0,
 })
-
-export default INITIAL_STATE

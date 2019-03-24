@@ -4,12 +4,10 @@
  * @see https://redux.js.org/basics/reducers
  */
 
-import INITIAL_STATE from './InitialState'
+import { INITIAL_STATE, MODULE_NAME } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { NotificationTypes } from './Actions'
 import reducerRegistry from '../Reducers/ReducerRegistry'
-
-let reducerName = 'notification'
 
 export const showNotification = (
   state = INITIAL_STATE,
@@ -36,5 +34,5 @@ const reducer = createReducer(INITIAL_STATE, {
   [NotificationTypes.HIDE_NOTIFICATION]: hideNotification,
 })
 
-reducerRegistry.register(reducerName, reducer)
+reducerRegistry.register(MODULE_NAME, reducer)
 export default reducer

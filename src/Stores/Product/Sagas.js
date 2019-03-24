@@ -12,6 +12,7 @@ import {
 } from '../../Services/ProductService'
 import { push } from 'connected-react-router'
 import sagaRegistry from '../Sagas/SagaRegistry'
+import { MODULE_NAME } from './InitialState'
 
 function* getListProductWorker({ filter }) {
   try {
@@ -138,6 +139,6 @@ function* watcher() {
     takeLatest(ProductTypes.GET_ITEM_REQUEST, getItemDetailWorker),
   ])
 }
-sagaRegistry.register('product', watcher)
+sagaRegistry.register(MODULE_NAME, watcher)
 
 export default watcher

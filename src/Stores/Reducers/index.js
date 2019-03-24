@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux' //
-import authInitialState from '../Authentication/InitialState'
-import notificationInitial from '../Notification/InitialState'
-import globalInitial from '../Global/InitialState'
-import modalInitial from '../Modal/InitialState'
-import productInitial from '../Product/InitialState'
+import * as auth from '../Authentication/InitialState'
+import * as notifi from '../Notification/InitialState'
+import * as global from '../Global/InitialState'
+import * as modal from '../Modal/InitialState'
+import * as product from '../Product/InitialState'
 
 export const initialState = {
-  auth: authInitialState,
-  notification: notificationInitial,
-  product: productInitial,
-  gobal: globalInitial,
-  modal: modalInitial,
+  [auth.MODULE_NAME]: auth.INITIAL_STATE,
+  [notifi.MODULE_NAME]: notifi.INITIAL_STATE,
+  [product.MODULE_NAME]: product.INITIAL_STATE,
+  [global.MODULE_NAME]: global.INITIAL_STATE,
+  [modal.MODULE_NAME]: modal.INITIAL_STATE,
 }
 export const combine = reducers => {
   const reducerNames = Object.keys(reducers)
