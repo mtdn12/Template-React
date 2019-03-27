@@ -3,9 +3,6 @@ export class SagaRegistry {
     this._emitChange = null
     this._sagas = {}
   }
-  getReducers() {
-    return { ...this._reducers }
-  }
   register(name, saga) {
     if (this._sagas[name]) return
     this._sagas = { ...this._sagas, [name]: saga }

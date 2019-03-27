@@ -4,6 +4,7 @@ import * as notifi from '../Notification/InitialState'
 import * as global from '../Global/InitialState'
 import * as modal from '../Modal/InitialState'
 import * as product from '../Product/InitialState'
+import * as loading from '../Loading/InitialState'
 
 export const initialState = {
   [auth.MODULE_NAME]: auth.INITIAL_STATE,
@@ -11,6 +12,7 @@ export const initialState = {
   [product.MODULE_NAME]: product.INITIAL_STATE,
   [global.MODULE_NAME]: global.INITIAL_STATE,
   [modal.MODULE_NAME]: modal.INITIAL_STATE,
+  [loading.MODULE_NAME]: loading.INITIAL_STATE,
 }
 export const combine = reducers => {
   const reducerNames = Object.keys(reducers)

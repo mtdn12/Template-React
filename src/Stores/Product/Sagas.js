@@ -10,14 +10,17 @@ import {
   editProduct,
   getItem,
 } from '../../Services/ProductService'
+import { LoadingActions } from '../Loading/Actions'
 import { push } from 'connected-react-router'
 import sagaRegistry from '../Sagas/SagaRegistry'
 import { MODULE_NAME } from './InitialState'
 
 function* getListProductWorker({ filter }) {
   try {
+    yield put(LoadingActions.showLoadingList())
     const response = yield call(getListProduct, filter)
     // console.log(response)
+    yield put(LoadingActions.hideLoadingList())
     yield put({
       type: ProductTypes.GET_ITEMS_SUCCESS,
       items: response.items,
@@ -29,17 +32,18 @@ function* getListProductWorker({ filter }) {
     yield put({
       type: ProductTypes.GET_ITEMS_FAILURE,
     })
+    yield put(LoadingActions.hideLoadingList())
   }
 }
 
 function* deleteItemWorker({ id }) {
   try {
-    yield put(ModalActions.showLoadingAction())
+    yield put(LoadingActions.showLoadingAction())
     yield call(deleteProduct, id)
     yield put({
       type: ProductTypes.DELETE_ITEM_SUCCESS,
     })
-    yield put(ModalActions.hideLoadingAction())
+    yield put(LoadingActions.hideLoadingAction())
     yield put(ModalActions.clearModal())
     const filter = yield select(getFilter)
     yield put(ProductActions.getItemsRequest(filter.toJS()))
@@ -54,14 +58,13 @@ function* deleteItemWorker({ id }) {
         'red'
       )
     )
-    yield put(ModalActions.hideLoadingAction())
+    yield put(LoadingActions.hideLoadingAction())
   }
 }
 // Get item Detail and set to form item to edit product
 function* getItemDetailWorker({ id }) {
   try {
     const response = yield call(getItem, id)
-    console.log(response)
     if (response.result === 'fail') {
       throw new Error(response.error)
     }
@@ -78,6 +81,7 @@ function* getItemDetailWorker({ id }) {
 // Create Product worker
 function* createItemWorker({ values }) {
   try {
+    yield put(LoadingActions.showLoadingAction())
     const response = yield call(createProduct, values)
     console.log(response)
     yield put({
@@ -90,6 +94,7 @@ function* createItemWorker({ values }) {
         'blue'
       )
     )
+    yield put(LoadingActions.hideLoadingAction())
     yield put(push('/product'))
   } catch (error) {
     yield put({
@@ -102,11 +107,13 @@ function* createItemWorker({ values }) {
         'red'
       )
     )
+    yield put(LoadingActions.hideLoadingAction())
   }
 }
 // Edit Product worker
 function* editItemWorker({ id, values }) {
   try {
+    yield put(LoadingActions.showLoadingAction())
     const response = yield call(editProduct, id, values)
     console.log(response)
     yield put({
@@ -119,6 +126,7 @@ function* editItemWorker({ id, values }) {
         'blue'
       )
     )
+    yield put(LoadingActions.hideLoadingAction())
     yield put(push('/product'))
   } catch (error) {
     yield put({
@@ -127,6 +135,7 @@ function* editItemWorker({ id, values }) {
     yield put(
       NotificationActions.showNotification('Edit Product', error.message, 'red')
     )
+    yield put(LoadingActions.hideLoadingAction())
   }
 }
 

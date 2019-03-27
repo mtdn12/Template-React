@@ -11,8 +11,6 @@ const ProductTable = ({
   totalPages,
   filter,
   handleSetFilter,
-  // loading products
-  isLoadingItem,
   // Delete product
   handleDeleteProduct,
 }) => {

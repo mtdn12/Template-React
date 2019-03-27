@@ -14,12 +14,14 @@ import globalSaga from './Global/Sagas'
 import startupSaga from './Startup/Sagas'
 // Import reducer to register static reducer
 import reducerRegistry from './Reducers/ReducerRegistry'
-import authReducer from '../Stores/Authentication/Reducers'
-import globalReducer from '../Stores/Global/Reducers'
+import authReducer from './Authentication/Reducers'
+import globalReducer from './Global/Reducers'
+import loadingReducer from './Loading/Reducers'
 // Import module name
 import { MODULE_NAME as authName } from './Authentication/InitialState'
 import { MODULE_NAME as startupName } from './Startup/InitialState'
 import { MODULE_NAME as globalName } from './Global/InitialState'
+import { MODULE_NAME as loadingName } from './Loading/InitialState'
 
 const persistConfig = {
   transforms: [immutableTransform()],
@@ -28,7 +30,7 @@ const persistConfig = {
   /**
    * Blacklist state that we do not need/want to persist
    */
-  blacklist: ['router', 'notification'],
+  blacklist: ['router', 'notification', 'loading'],
 }
 
 const createRootStore = history => {
@@ -74,6 +76,7 @@ const createRootStore = history => {
   reducerRegistry.register('router', connectRouter(history))
   reducerRegistry.register(authName, authReducer)
   reducerRegistry.register(globalName, globalReducer)
+  reducerRegistry.register(loadingName, loadingReducer)
   return store
 }
 

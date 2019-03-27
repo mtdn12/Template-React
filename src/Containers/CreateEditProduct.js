@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import CreateEditProduct from 'src/Components/pages/CreateEditProduct'
 import { ProductActions, ProductTypes } from '../Stores/Product/Actions'
-import { getFormItem, getLoadingAction } from '../Stores/Product/Selectors'
+import { getFormItem } from '../Stores/Product/Selectors'
+import { getLoadingAction } from '../Stores/Loading/Selectors'
 
 class CreateEditProductContainer extends Component {
   componentDidMount() {

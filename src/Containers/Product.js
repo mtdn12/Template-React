@@ -5,6 +5,7 @@ import Product from 'src/Components/pages/Product'
 import '../Stores/Product/Sagas'
 import '../Stores/Product/Reducers'
 import { ProductActions } from '../Stores/Product/Actions'
+import { getLoadingList } from '../Stores/Loading/Selectors'
 import { ModalActions } from '../Stores/Modal/Actions'
 import {
   getFilter,
@@ -13,7 +14,6 @@ import {
   getTotalCount,
   getTotalPages,
 } from '../Stores/Product/Selectors'
-
 const ProductContainer = props => {
   useEffect(() => {
     props.handleGetListProduct(props.filter.toJS())
@@ -46,7 +46,7 @@ const ProductContainer = props => {
 const mapStateToProps = state => ({
   items: getItems(state),
   filter: getFilter(state),
-  isLoadingItem: getLoadingItem(state),
+  isLoadingItems: getLoadingList(state),
   totalCount: getTotalCount(state),
   totalPages: getTotalPages(state),
 })
@@ -69,9 +69,5 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
-// const withProductReducer = withReducer({
-//   key: 'product',
-//   reducer: productReducer,
-// })
 
 export default compose(withConnect)(ProductContainer)

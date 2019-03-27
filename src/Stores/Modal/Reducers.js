@@ -22,18 +22,9 @@ const setModal = (state, { modalType, modalProps }) =>
 // Clear modal
 const clearModal = (state, action) => state.set('modal', null)
 
-// Show loading action
-const showLoadingAction = (state, action) => state.set('isLoadingAction', true)
-// Hide loading action
-const hideLoadingAction = (state, action) => state.set('isLoadingAction', false)
-/**
- * @see https://github.com/infinitered/reduxsauce#createreducer
- */
 const reducer = createReducer(INITIAL_STATE, {
   [ModalTypes.SET_MODAL]: setModal,
   [ModalTypes.CLEAR_MODAL]: clearModal,
-  [ModalTypes.SHOW_LOADING_ACTION]: showLoadingAction,
-  [ModalTypes.HIDE_LOADING_ACTION]: hideLoadingAction,
 })
 reducerRegistry.register(MODULE_NAME, reducer)
 

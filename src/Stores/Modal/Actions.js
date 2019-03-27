@@ -7,10 +7,6 @@ const { Types, Creators } = createActions(
     setModal: ['modalType', 'modalProps'],
     // Clear Modal
     clearModal: null,
-    // Show loading action in modal
-    showLoadingAction: null,
-    // Hide loading action in modal
-    hideLoadingAction: null,
   },
   {
     prefix: `@@${MODULE_NAME}/`,

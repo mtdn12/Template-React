@@ -5,9 +5,6 @@ import { createReducer } from 'reduxsauce'
 import { ProductTypes } from './Actions'
 import reducerRegistry from '../Reducers/ReducerRegistry'
 
-const showLoadingItem = state => state.set('isLoadingItem', true)
-const hideLoadingItem = state => state.set('isLoadingItem', false)
-
 const clearItems = state =>
   state
     .set('items', fromJS([]))
@@ -19,7 +16,6 @@ const setItems = (state, { items, totalCount, totalPages }) =>
     .set('items', fromJS(items))
     .set('totalCount', totalCount)
     .set('totalPages', totalPages)
-    .set('isLoadingItem', false)
 
 const setFilter = (state, { name, value }) =>
   state.setIn(['filter', name], value)
@@ -37,28 +33,16 @@ const resetItem = state =>
       amount: '',
     })
   )
-// Show and hide loading action when create or edit product
-const showLoadingAction = state => state.set('isLoadingAction', true)
-const hideLoadingAction = state => state.set('isLoadingAction', false)
 
 const reducer = createReducer(INITIAL_STATE, {
   // List items action handler
-  [ProductTypes.GET_ITEMS_REQUEST]: showLoadingItem,
   [ProductTypes.GET_ITEMS_SUCCESS]: setItems,
-  [ProductTypes.GET_ITEMS_FAILURE]: hideLoadingItem,
   [ProductTypes.CLEAR_ITEMS]: clearItems,
   // Set filters handler
   [ProductTypes.SET_FILTER]: setFilter,
   // Get Item Detail
   [ProductTypes.GET_ITEM_SUCCESS]: setItem,
   [ProductTypes.CLEAR_ITEM]: resetItem,
-  // show and hide loading when create or edit product
-  [ProductTypes.CREATE_ITEM_REQUEST]: showLoadingAction,
-  [ProductTypes.CREATE_ITEM_SUCCESS]: hideLoadingAction,
-  [ProductTypes.CREATE_ITEM_FAILURE]: hideLoadingAction,
-  [ProductTypes.EDIT_ITEM_REQUEST]: showLoadingAction,
-  [ProductTypes.EDIT_ITEM_SUCCESS]: hideLoadingAction,
-  [ProductTypes.EDIT_ITEM_FAILURE]: hideLoadingAction,
 })
 
 reducerRegistry.register(MODULE_NAME, reducer)

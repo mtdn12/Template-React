@@ -13,8 +13,6 @@ export const INITIAL_STATE = fromJS({
     name: '',
     amount: '',
   },
-  isLoadingItem: false,
-  isLoadingAction: false,
   filter: {
     limit: 5,
     page: 1,

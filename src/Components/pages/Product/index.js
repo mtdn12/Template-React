@@ -9,7 +9,7 @@ const Product = ({
   items,
   filter,
   totalCount,
-  isLoadingItem,
+  isLoadingItems,
   totalPages,
   handleSetFilter,
   // Delete product
@@ -22,14 +22,13 @@ const Product = ({
           Create New Product
         </Button>
       </div>
-      {isLoadingItem && <Loader active size="medium" inline="centered" />}
-      {!isLoadingItem && (
+      {isLoadingItems && <Loader active size="medium" inline="centered" />}
+      {!isLoadingItems && (
         <ProductTable
           items={items}
           filter={filter}
           totalPages={totalPages}
           handleSetFilter={handleSetFilter}
-          isLoadingItem={isLoadingItem}
           handleDeleteProduct={handleDeleteProduct}
         />
       )}
@@ -41,7 +40,7 @@ Product.propTypes = {
   items: object.isRequired,
   filter: object.isRequired,
   totalCount: number.isRequired,
-  isLoadingItem: bool.isRequired,
+  isLoadingItems: bool.isRequired,
   totalPages: number.isRequired,
   handleSetFilter: func.isRequired,
   // Delete product
