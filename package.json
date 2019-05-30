@@ -1,6 +1,6 @@
 {
-  "name": "template-webapp-atomic-reactjs-pro",
-  "version": "0.1.0",
+  "name": "template-react",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "apisauce": "^1.0.2",
@@ -10,24 +10,23 @@
     "core-js": "^3.0.0",
     "formik": "^1.5.1",
     "history": "^4.7.2",
-    "hoist-non-react-statics": "^3.3.0",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
-    "react": "16.8.4",
-    "react-dom": "16.8.4",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "react-google-login": "^3.2.1",
     "react-loadable": "^5.5.0",
     "react-number-format": "^3.5.2",
-    "react-redux": "^7.0.0-beta.0",
+    "react-redux": "^7.0.3",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.9.1",
     "redux-persist-transform-immutable": "^5.0.0",
-    "redux-saga": "^0.16.2",
+    "redux-saga": "^1.0.2",
     "reduxsauce": "^1.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.82.5",
@@ -56,13 +55,19 @@
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.10.0",
     "prettier": "^1.14.3",
-    "react-scripts": "^2.0.5",
+    "react-scripts": "^3.0.1",
     "standard": "^12.0.1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

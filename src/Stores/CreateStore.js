@@ -26,6 +26,7 @@ import { MODULE_NAME as loadingName } from './Loading/InitialState'
 const persistConfig = {
   transforms: [immutableTransform()],
   key: 'root',
+  keyPrefix: 'Template-react',
   storage: storage,
   /**
    * Blacklist state that we do not need/want to persist
