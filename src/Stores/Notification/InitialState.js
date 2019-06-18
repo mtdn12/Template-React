@@ -6,8 +6,7 @@ import { Map } from 'immutable'
 export const MODULE_NAME = 'notification'
 
 export const INITIAL_STATE = Map({
-  title: '',
+  isOpen: false,
   message: '',
-  open: false,
-  color: 'blue',
+  duration: 3000,
 })

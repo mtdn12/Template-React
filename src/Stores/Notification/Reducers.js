@@ -9,25 +9,17 @@ import { createReducer } from 'reduxsauce'
 import { NotificationTypes } from './Actions'
 import reducerRegistry from '../Reducers/ReducerRegistry'
 
-export const showNotification = (
-  state = INITIAL_STATE,
-  { title, message, color }
-) =>
+export const showNotification = (state = INITIAL_STATE, { message }) =>
   state.merge({
-    title: title,
     message: message,
-    color: color,
-    open: true,
+    isOpen: true,
   })
 
 export const hideNotification = (state = INITIAL_STATE) =>
   state.merge({
-    open: false,
+    isOpen: false,
+    message: '',
   })
-
-/**
- * @see https://github.com/infinitered/reduxsauce#createreducer
- */
 
 const reducer = createReducer(INITIAL_STATE, {
   [NotificationTypes.SHOW_NOTIFICATION]: showNotification,

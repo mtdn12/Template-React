@@ -1,26 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { PropTypes } from 'prop-types'
 import { compose } from 'redux'
 import { NotificationActions } from 'src/Stores/Notification/Actions'
 import '../Stores/Notification/Reducers'
 import Notification from 'src/Components/organisms/Notification'
+import { NotificationSelectors } from '../Stores/Notification/Selectors'
 
-class NotificationContainer extends React.Component {
-  componentDidMount() {}
-
-  render() {
-    return <Notification {...this.props} />
-  }
+const NotificationContainer = props => {
+  return <Notification {...props} />
 }
 
 NotificationContainer.propsTypes = {}
 
 const mapStateToProps = state => ({
-  open: state.notification.get('open'),
-  title: state.notification.get('title'),
-  message: state.notification.get('message'),
-  color: state.notification.get('color'),
+  isOpen: NotificationSelectors.getIsOpen(state),
+  message: NotificationSelectors.getMessage(state),
+  duration: NotificationSelectors.getDuration(state),
 })
 
 const mapDispatchToProps = dispatch => ({

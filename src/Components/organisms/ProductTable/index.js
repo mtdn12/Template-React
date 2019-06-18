@@ -1,74 +1,94 @@
 import React from 'react'
-
-import { Table, Button, Icon } from 'semantic-ui-react'
-import { object, func, bool, number } from 'prop-types'
+import { object, func, number } from 'prop-types'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+  Checkbox,
+  CircularProgress,
+} from '@material-ui/core'
+import { Edit, Delete } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
-import styles from './styles.module.scss'
 import Pagination from '../../molecules/Pagination'
+
+const RefLink = React.forwardRef((props, ref) => <Link ref={ref} {...props} />)
 
 const ProductTable = ({
   items,
-  totalPages,
+  totalCount,
   filter,
   handleSetFilter,
   // Delete product
   handleDeleteProduct,
+  handleCheckProduct,
+  loadingItems,
 }) => {
   return (
-    <div id={styles.tableWrap}>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Amount</Table.HeaderCell>
-            <Table.HeaderCell />
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {items.length === 0 ? (
-            <Table.Row>
-              <Table.Cell>No infomation</Table.Cell>
-            </Table.Row>
+    <div>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {items && items.length === 0 ? (
+            <TableRow>
+              <TableCell>No infomation</TableCell>
+            </TableRow>
           ) : (
+            items &&
             items.map(item => (
-              <Table.Row key={item.get('id')}>
-                <Table.Cell>{item.get('id')}</Table.Cell>
-                <Table.Cell>{item.get('name')}</Table.Cell>
-                <Table.Cell>{item.get('amount')}</Table.Cell>
-                <Table.Cell>
-                  <Button
-                    icon
-                    primary
-                    as={Link}
+              <TableRow key={item.get('id')}>
+                <TableCell>{item.get('id')}</TableCell>
+                <TableCell>{item.get('name')}</TableCell>
+                <TableCell>{item.get('amount')}</TableCell>
+                <TableCell>
+                  {!loadingItems.get(item.get('id')) && (
+                    <Checkbox
+                      checked={item.get('isDone')}
+                      disabled={loadingItems.get(item.get('id'))}
+                      onChange={handleCheckProduct(item.get('id'))}
+                    />
+                  )}
+                  {loadingItems.get(item.get('id')) && (
+                    <CircularProgress size={28} />
+                  )}
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    component={RefLink}
                     to={`/product/edit/${item.get('id')}`}>
-                    <Icon name="edit" />
-                  </Button>
-                  <Button
-                    icon
-                    negative
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    color="secondary"
                     onClick={handleDeleteProduct(item.get('id'))}>
-                    <Icon name="delete" />
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
+                    <Delete />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             ))
           )}
-        </Table.Body>
+        </TableBody>
       </Table>
       <Pagination
-        activePage={filter.get('page')}
-        totalPages={totalPages}
-        handleChangePage={(e, { activePage }) =>
+        options={[5, 10, 15]}
+        page={filter.get('page')}
+        rowsPerPage={filter.get('limit')}
+        count={totalCount}
+        handleChangePage={(e, activePage) =>
           handleSetFilter('page', activePage)
         }
-        handleChangeLimit={(e, { value }) => handleSetFilter('limit', value)}
-        limit={filter.get('limit')}
-        options={[
-          { text: '5', value: 5 },
-          { text: '10', value: 10 },
-          { text: '20', value: 20 },
-        ]}
+        handleChangeRowsPerPage={e => handleSetFilter('limit', +e.target.value)}
       />
     </div>
   )
@@ -76,11 +96,12 @@ const ProductTable = ({
 
 ProductTable.propTypes = {
   items: object.isRequired,
-  totalPages: number.isRequired,
+  totalCount: number.isRequired,
   filter: object.isRequired,
   handleSetFilter: func.isRequired,
-  isLoadingItem: bool.isRequired,
   // Delete product
   handleDeleteProduct: func.isRequired,
+  handleCheckProduct: func.isRequired,
+  loadingItems: object.isRequired,
 }
 export default ProductTable

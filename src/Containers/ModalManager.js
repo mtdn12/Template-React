@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { func, bool, object } from 'prop-types'
 import '../Stores/Modal/Reducers'
 import { ModalActions } from 'src/Stores/Modal/Actions'
 import { getModal } from 'src/Stores/Modal/Selectors'
 import { getLoadingAction } from '../Stores/Loading/Selectors'
-import ConfirmationDialog from '../Components/molecules/ConfirmationDialog'
-import LoginModal from '../Components/organisms/LoginModal'
-import RegisterModal from '../Components/organisms/RegisterModal'
+import ConfirmationDialog from './ConfirmationDialog'
+import LoginModal from './LoginModal'
+import RegisterModal from './RegisterModal'
 
 const modalLookup = { ConfirmationDialog, LoginModal, RegisterModal }
 
@@ -34,6 +35,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleClose: () => dispatch(ModalActions.clearModal()),
 })
+
+Modal.propTypes = {
+  modal: object,
+  isLoadingAction: bool,
+  handleClose: func,
+}
 
 export default connect(
   mapStateToProps,

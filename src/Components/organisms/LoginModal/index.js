@@ -1,20 +1,39 @@
 import React from 'react'
-import { Modal, Form, Button, Header, Divider } from 'semantic-ui-react'
 import { Formik } from 'formik'
 import { func, bool, object } from 'prop-types'
 import * as Yup from 'yup'
-import styles from './styles.module.scss'
-import InputField from '../../atoms/InputField'
-import SocialLogin from '../../molecules/SocialLogin'
+import {
+  Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core'
+import useStyles from './styles'
 
-const LoginModal = ({ handleClose, isLoadingAction, item }) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
+
+const LoginModal = ({ handleClose, isLoadingAction, item, handleAction }) => {
+  const classes = useStyles()
   return (
-    <Modal onClose={handleClose} size="tiny" open id={styles.registerModal}>
-      <Modal.Header>
-        <Header as="h2" color="blue" inverted textAlign="center">
+    <Dialog
+      open
+      TransitionComponent={Transition}
+      onClose={handleClose}
+      fullWidth
+      maxWidth="sm">
+      <DialogTitle disableTypography>
+        <Typography gutterBottom variant="h5" align="center" color="primary">
+          {' '}
           Log In
-        </Header>
-      </Modal.Header>
+        </Typography>
+      </DialogTitle>
       <Formik
         initialValues={item}
         validationSchema={Yup.object().shape({
@@ -25,7 +44,7 @@ const LoginModal = ({ handleClose, isLoadingAction, item }) => {
             .required('Please input password')
             .min(6, 'Password must have atleast 6 character'),
         })}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => handleAction(values)}
         render={({
           values,
           errors,
@@ -34,48 +53,72 @@ const LoginModal = ({ handleClose, isLoadingAction, item }) => {
           touched,
           handleSubmit,
         }) => (
-          <Form onSubmit={handleSubmit}>
-            <Modal.Content className={styles.formContent}>
-              <InputField
-                name="email"
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <TextField
+                id="email"
+                required
+                className={classes.textField}
+                fullWidth
                 value={values.email}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                }}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Email"
                 error={touched.email && Boolean(errors.email)}
-                message={errors.email}
+                helperText={touched.email && errors.email}
+                placeholder="email"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-              <InputField
-                name="password"
+              <TextField
+                id="password"
+                required
+                fullWidth
                 value={values.password}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                  type: 'password',
-                }}
+                className={classes.textField}
+                type="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Password"
                 error={touched.password && Boolean(errors.password)}
-                message={errors.password}
+                helperText={touched.password && errors.password}
+                placeholder="Password"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-            </Modal.Content>
-            <Button
-              fluid
-              type="submit"
-              primary
-              disabled={isLoadingAction}
-              loading={isLoadingAction}>
-              Log In
-            </Button>
-            <Divider horizontal>OR</Divider>
-            <SocialLogin />
-          </Form>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                fullWidth
+                variant="contained"
+                type="button"
+                // primary
+                onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                type="submit"
+                // primary
+                disabled={isLoadingAction}
+                // loading={isLoadingAction}
+              >
+                Log In
+              </Button>
+              {isLoadingAction && (
+                <CircularProgress size={32} className={classes.loadingItem} />
+              )}
+            </DialogActions>
+          </form>
         )}
       />
-    </Modal>
+    </Dialog>
   )
 }
 
@@ -83,6 +126,7 @@ LoginModal.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
   item: object.isRequired,
+  handleAction: func.isRequired,
 }
 
 export default LoginModal

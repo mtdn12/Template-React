@@ -1,38 +1,66 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core'
+import useStyles from './styles'
 
-import { Modal, Button } from 'semantic-ui-react'
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
-class ConfirmationDialog extends React.PureComponent {
-  render() {
-    const {
-      title,
-      content,
-      handleClose,
-      onConfirm,
-      isLoadingAction,
-    } = this.props
-    return (
-      <Modal size="tiny" open onClose={handleClose}>
-        <Modal.Header>{title}</Modal.Header>
-        <Modal.Content>
-          <p>{content}</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button negative onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button
-            onClick={onConfirm}
-            primary
-            content="Ok"
-            loading={isLoadingAction}
-            disabled={isLoadingAction}
-          />
-        </Modal.Actions>
-      </Modal>
-    )
-  }
+const ConfirmationDialog = ({
+  title,
+  content,
+  handleClose,
+  onConfirm,
+  isLoadingAction,
+}) => {
+  const classes = useStyles()
+  return (
+    <Dialog
+      maxWidth={'xs'}
+      fullWidth
+      open
+      onClose={handleClose}
+      TransitionComponent={Transition}>
+      <DialogTitle disableTypography>
+        <Typography gutterBottom variant="h5" align="center" color="primary">
+          {title}
+        </Typography>
+      </DialogTitle>
+      <DialogContent>
+        <p>{content}</p>
+      </DialogContent>
+      <DialogActions className={classes.actionWrap}>
+        <Button
+          color="default"
+          variant="contained"
+          onClick={handleClose}
+          fullWidth>
+          Cancel
+        </Button>
+        <Button
+          fullWidth
+          onClick={onConfirm}
+          disabled={isLoadingAction}
+          color="primary"
+          variant="contained">
+          Ok{' '}
+        </Button>
+        {isLoadingAction && (
+          <CircularProgress size={32} className={classes.loadingItem} />
+        )}
+      </DialogActions>
+    </Dialog>
+  )
 }
 
 ConfirmationDialog.propTypes = {

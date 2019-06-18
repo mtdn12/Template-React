@@ -1,49 +1,37 @@
-import React, { Component } from 'react'
-import { bool, string, func } from 'prop-types'
-import { TransitionablePortal, Message } from 'semantic-ui-react'
-import styles from './styles.module.scss'
+import React from 'react'
+import { bool, string, func, number } from 'prop-types'
+import { Snackbar, IconButton } from '@material-ui/core'
+import Close from '@material-ui/icons/Close'
 
-class Notification extends Component {
-  static propTypes = {
-    onClose: func,
-  }
-  state = {
-    animation: 'fade up',
-    duration: 500,
-  }
-  componentDidMount() {
-    /* setTimeout(() => {
-      this.props.onClose()
-    }, 1000) */
-  }
-  render() {
-    const { open, onClose, color, message, title } = this.props
-    const { animation, duration } = this.state
-    return (
-      <TransitionablePortal
-        closeOnTriggerClick
-        open={open}
-        transition={{ animation, duration }}
-        onClose={onClose}>
-        <Message
-          color={color}
-          attached="top"
-          className={styles.messageWrapper}
-          onDismiss={onClose}
-          header={title}
-          content={message}
-        />
-      </TransitionablePortal>
-    )
-  }
+const Notification = ({ isOpen, message, duration, onClose }) => {
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      open={isOpen}
+      autoHideDuration={duration}
+      onClose={onClose}
+      message={message}
+      action={
+        <IconButton
+          key="close"
+          aria-label="Close"
+          color="inherit"
+          onClick={onClose}>
+          <Close />
+        </IconButton>
+      }
+    />
+  )
 }
 
 Notification.propTypes = {
-  open: bool,
-  onClose: func,
-  color: string,
-  message: string,
-  title: string,
+  isOpen: bool,
+  message: string.isRequired,
+  duration: number.isRequired,
+  onClose: func.isRequired,
 }
 
 export default Notification

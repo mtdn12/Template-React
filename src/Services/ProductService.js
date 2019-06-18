@@ -1,18 +1,18 @@
 /* eslint-disable promise/param-names */
 // fake api for list products
 let products = [
-  { id: 1, name: 'candy', amount: 5 },
-  { id: 2, name: 'Biscuit', amount: 10 },
-  { id: 3, name: 'ice cream', amount: 20 },
-  { id: 4, name: 'Book', amount: 3 },
-  { id: 5, name: 'Pencil', amount: 50 },
-  { id: 6, name: 'Bowl', amount: 21 },
-  { id: 7, name: 'Phone', amount: 5 },
-  { id: 8, name: 'Monitor', amount: 7 },
-  { id: 9, name: 'Mouse', amount: 10 },
-  { id: 10, name: 'Note book', amount: 20 },
-  { id: 11, name: 'Chair', amount: 35 },
-  { id: 12, name: 'Remote', amount: 100 },
+  { id: 1, name: 'candy', amount: 5, isDone: false },
+  { id: 2, name: 'Biscuit', amount: 10, isDone: false },
+  { id: 3, name: 'ice cream', amount: 20, isDone: false },
+  { id: 4, name: 'Book', amount: 3, isDone: false },
+  { id: 5, name: 'Pencil', amount: 50, isDone: false },
+  { id: 6, name: 'Bowl', amount: 21, isDone: false },
+  { id: 7, name: 'Phone', amount: 5, isDone: false },
+  { id: 8, name: 'Monitor', amount: 7, isDone: false },
+  { id: 9, name: 'Mouse', amount: 10, isDone: false },
+  { id: 10, name: 'Note book', amount: 20, isDone: false },
+  { id: 11, name: 'Chair', amount: 35, isDone: false },
+  { id: 12, name: 'Remote', amount: 100, isDone: false },
 ]
 const chunk = (arr, size) =>
   Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
@@ -25,7 +25,7 @@ export const getListProduct = filter => {
     const { page, limit } = filter
     let newProducts = [...products].reverse()
     let listItems = chunk(newProducts, limit)
-    const items = listItems[page - 1]
+    const items = listItems[page]
     setTimeout(() => {
       resolve({
         items,
@@ -75,6 +75,7 @@ export const createProduct = values => {
       id: products.length + +1,
       name: values.name,
       amount: values.amount,
+      isDone: false,
     }
     products.push(newProduct)
     setTimeout(() => {
@@ -103,8 +104,36 @@ export const editProduct = (id, values) => {
     setTimeout(() => {
       resolve({
         result: 'success',
-        item: products[id],
+        item: products.find(pro => pro.id === id),
       })
     }, 1000)
   })
+}
+
+// Check Done
+export const checkDone = id => {
+  return new Promise((resolve, reject) => {
+    let newProducts = products.map(pro => {
+      if (pro.id === id) {
+        pro.isDone = !pro.isDone
+      }
+      return pro
+    })
+    products = newProducts
+    setTimeout(() => {
+      resolve({
+        result: 'success',
+        item: products.find(pro => pro.id === id),
+      })
+    }, 1000)
+  })
+}
+
+export const ProductService = {
+  checkDone,
+  editProduct,
+  createProduct,
+  getItem,
+  deleteProduct,
+  getListProduct,
 }

@@ -8,7 +8,6 @@ const styles = {
   flexDirection: 'column',
   minHeight: '100vh',
   boxSizing: 'border-box',
-  // backgroundColor: '#fafafa',
   padding: 20,
 }
 

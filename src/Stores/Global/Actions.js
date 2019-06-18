@@ -3,11 +3,9 @@ import { MODULE_NAME } from './InitialState'
 
 const { Types, Creators } = createActions(
   {
-    showHideConfirmDialog: ['show', 'id'],
-    getConfigRequest: null,
-    getConfigSuccess: ['result'],
-    // An error occurred
-    getConfigFailure: ['errorMessage'],
+    getGlobalDataRequest: [null],
+    getGlobalDataSuccess: ['item'],
+    getGlobalDataFailure: ['null'],
   },
   {
     prefix: `@@${MODULE_NAME}/`,

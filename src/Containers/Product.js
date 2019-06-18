@@ -1,69 +1,88 @@
 import React, { useEffect } from 'react'
+import { func, object } from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import Product from 'src/Components/pages/Product'
 import '../Stores/Product/Sagas'
 import '../Stores/Product/Reducers'
 import { ProductActions } from '../Stores/Product/Actions'
-import { getLoadingList } from '../Stores/Loading/Selectors'
+import { LoadingSelectors } from '../Stores/Loading/Selectors'
 import { ModalActions } from '../Stores/Modal/Actions'
-import {
-  getFilter,
-  getItems,
-  getLoadingItem,
-  getTotalCount,
-  getTotalPages,
-} from '../Stores/Product/Selectors'
-const ProductContainer = props => {
+import { ProductSelectors } from '../Stores/Product/Selectors'
+const ProductContainer = ({
+  setFilter,
+  deleteProduct,
+  filter,
+  handleGetListProduct,
+  handleClearProducts,
+  handleOpenModal,
+  checkProduct,
+  ...props
+}) => {
   useEffect(() => {
-    props.handleGetListProduct(props.filter.toJS())
+    handleGetListProduct()
     return () => {
-      props.handleClearProducts()
+      handleClearProducts()
     }
-  }, [props.filter])
+  }, [filter, handleGetListProduct, handleClearProducts])
   // handle delete product
   const handleDeleteProduct = id => () => {
-    props.handleOpenModal('ConfirmationDialog', {
+    handleOpenModal('ConfirmationDialog', {
       title: 'Delete Product',
       content: 'Do You want to delete Product',
-      onConfirm: () => props.deleteProduct(id),
+      type: 'deleteProduct',
+      id,
     })
   }
-  const handleSetFilter = async (name, value) => {
-    await props.setFilter(name, value)
-    props.handleGetListProduct(props.filter.toJS())
+  // handle check product
+  const handleCheckProduct = id => () => {
+    checkProduct(id)
   }
-
+  const handleSetFilter = (name, value) => {
+    setFilter(name, value)
+  }
   return (
     <Product
       handleDeleteProduct={handleDeleteProduct}
       handleSetFilter={handleSetFilter}
+      handleCheckProduct={handleCheckProduct}
+      filter={filter}
       {...props}
     />
   )
 }
 
 const mapStateToProps = state => ({
-  items: getItems(state),
-  filter: getFilter(state),
-  isLoadingItems: getLoadingList(state),
-  totalCount: getTotalCount(state),
-  totalPages: getTotalPages(state),
+  items: ProductSelectors.getItems(state),
+  filter: ProductSelectors.getFilter(state),
+  isLoadingList: LoadingSelectors.getLoadingList(state),
+  totalCount: ProductSelectors.getTotalCount(state),
+  totalPages: ProductSelectors.getTotalPages(state),
+  loadingItems: LoadingSelectors.getLoadingItems(state),
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleGetListProduct: filter =>
-    dispatch(ProductActions.getItemsRequest(filter)),
+  handleGetListProduct: () => dispatch(ProductActions.getItemsRequest()),
   // Clear list product when component unmount
   handleClearProducts: () => dispatch(ProductActions.clearItems()),
   // Hanlde change filter
   setFilter: (name, value) => dispatch(ProductActions.setFilter(name, value)),
-  // Delete product
-  deleteProduct: id => dispatch(ProductActions.deleteItemRequest(id)),
   // Open modal
   handleOpenModal: (type, props) =>
     dispatch(ModalActions.setModal(type, props)),
+  // Check Product
+  checkProduct: id => dispatch(ProductActions.checkItemRequest(id)),
 })
+
+ProductContainer.propTypes = {
+  handleClearProducts: func,
+  filter: object,
+  handleOpenModal: func,
+  deleteProduct: func,
+  setFilter: func,
+  handleGetListProduct: func,
+  checkProduct: func,
+}
 
 const withConnect = connect(
   mapStateToProps,

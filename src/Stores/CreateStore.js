@@ -5,7 +5,6 @@ import { routerMiddleware } from 'connected-react-router/immutable'
 import { persistReducer, persistStore } from 'redux-persist'
 import immutableTransform from 'redux-persist-transform-immutable'
 import { combine, initialState } from './Reducers/index'
-
 import storage from 'redux-persist/lib/storage'
 // Import Saga and register saga to register static sagas
 import sagaRegistry from './Sagas/SagaRegistry'
@@ -26,12 +25,12 @@ import { MODULE_NAME as loadingName } from './Loading/InitialState'
 const persistConfig = {
   transforms: [immutableTransform()],
   key: 'root',
-  keyPrefix: 'Template-react',
+  keyPrefix: 'Template-react', // Key prefix when save to local storage, need declare to avoid conflict between projects
   storage: storage,
   /**
-   * Blacklist state that we do not need/want to persist
+   * White list State . These reducer will be persisted by redux-persist
    */
-  blacklist: ['router', 'notification', 'loading'],
+  whitelist: ['auth', 'global', 'modal'],
 }
 
 const createRootStore = history => {
@@ -50,7 +49,6 @@ const createRootStore = history => {
   ) {
     composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   }
-  // const rootReducer = createRootReducer()
   const rootReducer = combine(reducerRegistry.getReducers())
   // Redux persist
   const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -70,10 +68,11 @@ const createRootStore = history => {
   sagaRegistry.register(startupName, startupSaga)
   sagaRegistry.register(globalName, globalSaga)
   sagaRegistry.register(authName, authSaga)
-  // Register reducer change lítener
+  // Register reducer change listener
   reducerRegistry.setChangeListener(reducers => {
     store.replaceReducer(persistReducer(persistConfig, combine(reducers)))
   })
+  // Register reducer for global reducer ('router', 'authentication', 'global', 'loading')
   reducerRegistry.register('router', connectRouter(history))
   reducerRegistry.register(authName, authReducer)
   reducerRegistry.register(globalName, globalReducer)

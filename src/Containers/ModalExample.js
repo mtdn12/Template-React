@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import ModalExample from 'src/Components/pages/ModalExample'
 import { ModalActions } from '../Stores/Modal/Actions'
 
-class ModalExampleContainer extends Component {
-  handleOpenLoginModal = () => {
-    this.props.handleOpenModal('LoginModal', {
+const ModalExampleContainer = ({ handleOpenModal, ...props }) => {
+  const handleOpenLoginModal = () => {
+    handleOpenModal('LoginModal', {
       item: {
         email: '',
         password: '',
       },
     })
   }
-  handleOpenRegisterModal = () => {
-    this.props.handleOpenModal('RegisterModal', {
+  const handleOpenRegisterModal = () => {
+    handleOpenModal('RegisterModal', {
       item: {
         name: '',
         email: '',
@@ -23,18 +24,14 @@ class ModalExampleContainer extends Component {
       },
     })
   }
-
-  render() {
-    return (
-      <ModalExample
-        handleOpenLoginModal={this.handleOpenLoginModal}
-        handleOpenRegisterModal={this.handleOpenRegisterModal}
-        {...this.props}
-      />
-    )
-  }
+  return (
+    <ModalExample
+      handleOpenLoginModal={handleOpenLoginModal}
+      handleOpenRegisterModal={handleOpenRegisterModal}
+      {...props}
+    />
+  )
 }
-
 const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
@@ -46,5 +43,9 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+ModalExampleContainer.propTypes = {
+  handleOpenModal: func.isRequired,
+}
 
 export default compose(withConnect)(ModalExampleContainer)

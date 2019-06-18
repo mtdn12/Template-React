@@ -1,26 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { compose } from 'redux'
-import { GlobalActions } from 'src/Stores/Global/Actions'
 import { AuthActions } from 'src/Stores/Authentication/Actions'
+import { AuthSelectors } from '../Stores/Authentication/Selectors'
 
-import AuthTemplateV1 from 'src/Components/templates/AuthTemplate'
+import AuthTemplate from 'src/Components/templates/AuthTemplate'
 
-class AuthTemplateV1Container extends React.Component {
-  componentDidMount() {}
-
-  render() {
-    return <AuthTemplateV1 {...this.props} />
-  }
+const AuthTemplateContainer = props => {
+  const [isShowDrawer, setShowDrawer] = useState(false)
+  const handleShowDrawer = () => setShowDrawer(true)
+  const handleHideDrawer = () => setShowDrawer(false)
+  return (
+    <AuthTemplate
+      isShowDrawer={isShowDrawer}
+      handleShowDrawer={handleShowDrawer}
+      handleHideDrawer={handleHideDrawer}
+      {...props}
+    />
+  )
 }
 
-AuthTemplateV1Container.propsTypes = {
+AuthTemplateContainer.propsTypes = {
   doLogout: PropTypes.func,
   doGoto: PropTypes.func,
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  userData: AuthSelectors.getUserData(state),
+})
 
 const mapDispatchToProps = dispatch => ({
   doLogout: () => dispatch(AuthActions.doLogout()),
@@ -31,4 +39,4 @@ const withConnect = connect(
   mapDispatchToProps
 )
 
-export default compose(withConnect)(AuthTemplateV1Container)
+export default compose(withConnect)(AuthTemplateContainer)

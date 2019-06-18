@@ -1,54 +1,59 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
+import { func, object } from 'prop-types'
+import '../Stores/Product/Reducers'
+import '../Stores/Product/Sagas'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import CreateEditProduct from 'src/Components/pages/CreateEditProduct'
-import { ProductActions, ProductTypes } from '../Stores/Product/Actions'
-import { getFormItem } from '../Stores/Product/Selectors'
+import { ProductActions } from '../Stores/Product/Actions'
+import { ProductSelectors } from '../Stores/Product/Selectors'
 import { getLoadingAction } from '../Stores/Loading/Selectors'
 
-class CreateEditProductContainer extends Component {
-  componentDidMount() {
-    const { match, handleGetItemDetail } = this.props
+const CreateEditProductContainer = ({
+  match,
+  handleGetItemDetail,
+  handleResetItem,
+  history,
+  handleEditItem,
+  handleCreateItem,
+  ...props
+}) => {
+  // Check path and get item
+  useEffect(() => {
     if (match.path === '/product/edit/:id') {
       handleGetItemDetail(+match.params.id)
     }
-  }
-  componentWillUnmount() {
-    this.props.handleResetItem()
-  }
-  handleAction = values => {
-    console.log(values)
-    if (this.props.match.path === '/product/edit/:id') {
+    return () => handleResetItem()
+  }, [match.params.id, handleGetItemDetail, handleResetItem, match.path])
+  // Hadle Action
+  const handleAction = values => {
+    if (match.path === '/product/edit/:id') {
       const { id, ...rest } = values
-      this.props.handleEditItem(id, rest)
+      handleEditItem(id, rest)
     } else {
-      this.props.handleCreateItem(values)
+      handleCreateItem(values)
     }
   }
-  handleGoBack = () => {
-    this.props.history.push('/product')
+  // Handle go back
+  const handleGoBack = () => {
+    history.push('/product')
   }
-  render() {
-    let title =
-      this.props.match.path === '/product/create'
-        ? 'Create Product'
-        : 'Edit Product'
-    let btnContent =
-      this.props.match.path === '/product/create' ? 'Create' : 'Update'
-    return (
-      <CreateEditProduct
-        title={title}
-        handleAction={this.handleAction}
-        handleGoBack={this.handleGoBack}
-        btnContent={btnContent}
-        {...this.props}
-      />
-    )
-  }
+  let title =
+    match.path === '/product/create' ? 'Create Product' : 'Edit Product'
+  let btnContent = match.path === '/product/create' ? 'Create' : 'Update'
+  return (
+    <CreateEditProduct
+      title={title}
+      handleAction={handleAction}
+      handleGoBack={handleGoBack}
+      btnContent={btnContent}
+      {...props}
+    />
+  )
 }
 
 const mapStateToProps = state => ({
-  item: getFormItem(state),
+  item: ProductSelectors.getFormItem(state),
   isLoadingAction: getLoadingAction(state),
 })
 
@@ -68,5 +73,14 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )
+
+CreateEditProductContainer.propTypes = {
+  match: object.isRequired,
+  handleGetItemDetail: func.isRequired,
+  handleResetItem: func.isRequired,
+  history: object.isRequired,
+  handleEditItem: func.isRequired,
+  handleCreateItem: func.isRequired,
+}
 
 export default compose(withConnect)(CreateEditProductContainer)

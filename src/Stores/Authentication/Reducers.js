@@ -30,9 +30,6 @@ export const fetchAuthenticationFailure = (
 // Log out
 export const doLogout = (state = INITIAL_STATE) => INITIAL_STATE
 
-/**
- * @see https://github.com/infinitered/reduxsauce#createreducer
- */
 const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.FETCH_AUTHENTICATION_LOADING]: fetchAuthenticationLoading,
   [AuthTypes.FETCH_AUTHENTICATION_SUCCESS]: fetchAuthenticationSuccess,

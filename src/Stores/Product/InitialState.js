@@ -15,7 +15,7 @@ export const INITIAL_STATE = fromJS({
   },
   filter: {
     limit: 5,
-    page: 1,
+    page: 0,
     keyword: '',
   },
   totalCount: 0,

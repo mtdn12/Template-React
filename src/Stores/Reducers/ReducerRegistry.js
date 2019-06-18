@@ -6,7 +6,6 @@ export class ReducerRegistry {
   getReducers() {
     return { ...this._reducers }
   }
-
   register(name, reducer) {
     // Check if this reducer register or not
     if (this._reducers[name]) return

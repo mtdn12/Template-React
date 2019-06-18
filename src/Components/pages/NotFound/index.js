@@ -1,20 +1,29 @@
 import React from 'react'
-import { object } from 'prop-types'
-import { Header, Button } from 'semantic-ui-react'
+import { any } from 'prop-types'
+import { Typography, Button } from '@material-ui/core'
 
 import NonAuthTemplate from '../../templates/NonAuthTemplate'
 
-const NotFound = ({ classes }) => {
+const Link = React.forwardRef((props, ref) => (
+  <a ref={ref} {...props}>
+    {props.children}
+  </a>
+))
+
+const NotFound = () => {
   return (
     <NonAuthTemplate>
-      <Header as="h2">Not Found</Header>
-      <Button as="a" href="/" primary>
+      <Typography variant="h5" align="center" gutterBottom>
+        Not Found
+      </Typography>
+      <Button comment={Link} color="primary" href="/" variant="contained">
         Go back to homepage
       </Button>
     </NonAuthTemplate>
   )
 }
-NotFound.propTypes = {
-  classes: object.isRequired,
+
+Link.propTypes = {
+  children: any,
 }
 export default NotFound

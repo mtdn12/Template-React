@@ -4,7 +4,7 @@ import { MODULE_NAME } from './InitialState'
 const { Types, Creators } = createActions(
   {
     // Show notification with message
-    showNotification: ['title', 'message', 'color'],
+    showNotification: ['message'],
     // Hide Notification
     hideNotification: null,
   },

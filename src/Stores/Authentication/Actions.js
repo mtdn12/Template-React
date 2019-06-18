@@ -11,6 +11,14 @@ const { Types, Creators } = createActions(
     fetchAuthenticationSuccess: ['userData'],
     // An error occurred
     fetchAuthenticationFailure: ['errorMessage'],
+    // Login modal
+    loginRequest: ['values'],
+    loginSuccess: null,
+    loginFailure: null,
+    // Register modal
+    registerRequest: ['values'],
+    registerSuccess: null,
+    registerFailure: null,
     // log out
     doLogout: null,
   },

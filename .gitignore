@@ -9,8 +9,6 @@
 # production
 /build
 
-# Semantic UI build
-/semantic/dist
 
 # misc
 .DS_Store

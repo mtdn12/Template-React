@@ -4,7 +4,7 @@ import { MODULE_NAME } from './InitialState'
 const { Types, Creators } = createActions(
   {
     // Get List Product actions
-    getItemsRequest: ['filter'],
+    getItemsRequest: null,
     getItemsSuccess: ['items'],
     getItemsFailure: null,
     clearItems: null,
@@ -25,6 +25,10 @@ const { Types, Creators } = createActions(
     deleteItemRequest: ['id'],
     deleteItemSuccess: null,
     deleteItemFailure: null,
+    // Check item done
+    checkItemRequest: ['id'],
+    checkItemSuccess: ['item'],
+    checkItemFailure: null,
     // Change Filter
     setFilter: ['name', 'value'],
   },

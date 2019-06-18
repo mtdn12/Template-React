@@ -33,6 +33,17 @@ const resetItem = state =>
       amount: '',
     })
   )
+// Check Item reducer
+const setItemCheck = (state, { item }) => {
+  const listProduct = state.get('items')
+  let newList = listProduct.map(pro => {
+    if (pro.get('id') === item.id) {
+      return fromJS(item)
+    }
+    return pro
+  })
+  return state.set('items', newList)
+}
 
 const reducer = createReducer(INITIAL_STATE, {
   // List items action handler
@@ -43,6 +54,8 @@ const reducer = createReducer(INITIAL_STATE, {
   // Get Item Detail
   [ProductTypes.GET_ITEM_SUCCESS]: setItem,
   [ProductTypes.CLEAR_ITEM]: resetItem,
+  // Check item
+  [ProductTypes.CHECK_ITEM_SUCCESS]: setItemCheck,
 })
 
 reducerRegistry.register(MODULE_NAME, reducer)

@@ -1,7 +1,24 @@
-import Colors from './Colors'
-import Fonts from './Fonts'
-import Metrics from './Metrics'
-import Images from './Images'
-import ApplicationStyles from './ApplicationStyles'
+import { createMuiTheme } from '@material-ui/core/styles'
 
-export { Colors, Fonts, Images, Metrics, ApplicationStyles }
+// import * as styleDefault from './style'
+
+const theme = createMuiTheme({
+  typography: {
+    // useNextVariants: true,
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+})
+
+export default theme

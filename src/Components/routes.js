@@ -31,3 +31,9 @@ export const AsyncModalExample = Loadable({
   loader: () => import('src/Containers/ModalExample'),
   loading: LoadingPage,
 })
+
+// Test loading page
+// export const AsyncLoading = Loadable({
+//   loader: () => import('./pages/LoadingPage'),
+//   loading: LoadingPage,
+// })

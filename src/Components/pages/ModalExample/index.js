@@ -1,19 +1,31 @@
 import React from 'react'
-import styles from './styles.module.scss'
-import { object, bool, number, func } from 'prop-types'
-import { Button, Header } from 'semantic-ui-react'
+import { withStyles } from '@material-ui/core/styles'
+import { Typography, Button } from '@material-ui/core'
+import styles from './styles.js'
+import { object, func } from 'prop-types'
 
-const ModalExample = ({ handleOpenLoginModal, handleOpenRegisterModal }) => {
+const ModalExample = ({
+  classes,
+  handleOpenLoginModal,
+  handleOpenRegisterModal,
+}) => {
   return (
-    <div id={styles.modalExampleWrap}>
-      <Header as="h1" textAlign="center" color="blue">
+    <div>
+      <Typography variant="h4" align="center" color="primary" gutterBottom>
         Modal Example
-      </Header>
-      <div className={styles.btnWrap}>
-        <Button onClick={handleOpenLoginModal} color="blue">
+      </Typography>
+      <div className={classes.btnWrap}>
+        <Button
+          style={{ marginRight: 10 }}
+          onClick={handleOpenLoginModal}
+          variant="contained"
+          color="primary">
           Open Login Modal Example
         </Button>
-        <Button onClick={handleOpenRegisterModal} color="blue">
+        <Button
+          onClick={handleOpenRegisterModal}
+          variant="contained"
+          color="primary">
           Open Register Modal Example
         </Button>
       </div>
@@ -24,6 +36,7 @@ const ModalExample = ({ handleOpenLoginModal, handleOpenRegisterModal }) => {
 ModalExample.propTypes = {
   handleOpenRegisterModal: func,
   handleOpenLoginModal: func,
+  classes: object.isRequired,
 }
 
-export default ModalExample
+export default withStyles(styles)(ModalExample)

@@ -1,15 +1,23 @@
 import React from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { withStyles } from '@material-ui/core/styles'
+import { TextField, Button, CircularProgress } from '@material-ui/core'
 import { object, func, bool, string } from 'prop-types'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import InputField from '../../atoms/InputField'
+import styles from './styles'
 
-const ProductForm = ({ item, handleAction, isLoadingAction, btnContent }) => {
+const ProductForm = ({
+  classes,
+  item,
+  handleAction,
+  isLoadingAction,
+  btnContent,
+}) => {
+  const formItem = item.toJS()
   return (
     <div>
       <Formik
-        initialValues={item.toJS()}
+        initialValues={formItem}
         validationSchema={Yup.object().shape({
           name: Yup.string().required('Please input your product name'),
           amount: Yup.number().required('Please input amount of product'),
@@ -24,41 +32,55 @@ const ProductForm = ({ item, handleAction, isLoadingAction, btnContent }) => {
           touched,
           handleSubmit,
         }) => (
-          <Form onSubmit={handleSubmit}>
-            <InputField
-              name="name"
+          <form onSubmit={handleSubmit}>
+            <TextField
+              id="name"
+              required
+              className={classes.textField}
+              fullWidth
               value={values.name}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              inputProps={{
-                fluid: true,
-              }}
+              onChange={handleChange}
+              onBlur={handleBlur}
               label="Name"
               error={touched.name && Boolean(errors.name)}
-              message={errors.name}
+              helperText={errors.name}
+              placeholder="name"
+              variant="outlined"
+              // InputProps={{
+              //   disableUnderline: true,
+              // }}
             />
-            <InputField
-              name="amount"
+            <TextField
+              id="amount"
+              required
+              className={classes.textField}
+              fullWidth
               value={values.amount}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              inputProps={{
-                fluid: true,
-                type: 'number',
-              }}
+              onChange={handleChange}
+              onBlur={handleBlur}
               label="Amount"
               error={touched.amount && Boolean(errors.amount)}
-              message={errors.amount}
+              helperText={errors.amount}
+              placeholder="amount"
+              variant="outlined"
+              // InputProps={{
+              //   disableUnderline: true,
+              // }}
             />
-            <Button
-              type="submit"
-              primary
-              fluid
-              loading={isLoadingAction}
-              disabled={isLoadingAction}>
-              {btnContent}
-            </Button>
-          </Form>
+            <div className={classes.loadingWrap}>
+              <Button
+                type="submit"
+                color="primary"
+                fullWidth
+                variant="contained"
+                disabled={isLoadingAction}>
+                {btnContent}
+              </Button>
+              {isLoadingAction && (
+                <CircularProgress size={32} className={classes.loadingItem} />
+              )}
+            </div>
+          </form>
         )}
       />
     </div>
@@ -66,10 +88,11 @@ const ProductForm = ({ item, handleAction, isLoadingAction, btnContent }) => {
 }
 
 ProductForm.propTypes = {
+  classes: object.isRequired,
   item: object.isRequired,
   handleAction: func.isRequired,
   isLoadingAction: bool.isRequired,
-  btnContent: string.required,
+  btnContent: string,
 }
 
-export default ProductForm
+export default withStyles(styles)(ProductForm)

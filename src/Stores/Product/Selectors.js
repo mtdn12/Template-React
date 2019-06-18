@@ -1,11 +1,19 @@
 import { MODULE_NAME } from './InitialState'
 
-export const getFilter = state => state[MODULE_NAME].get('filter')
+const getFilter = state => state[MODULE_NAME].get('filter')
 
-export const getItems = state => state[MODULE_NAME].get('items')
+const getItems = state => state[MODULE_NAME].get('items')
 
-export const getTotalCount = state => state[MODULE_NAME].get('totalCount')
+const getTotalCount = state => state[MODULE_NAME].get('totalCount')
 
-export const getTotalPages = state => state[MODULE_NAME].get('totalPages')
+const getTotalPages = state => state[MODULE_NAME].get('totalPages')
 
-export const getFormItem = state => state[MODULE_NAME].get('formItem')
+const getFormItem = state => state[MODULE_NAME].get('formItem')
+
+export const ProductSelectors = {
+  getFilter,
+  getItems,
+  getTotalCount,
+  getTotalPages,
+  getFormItem,
+}

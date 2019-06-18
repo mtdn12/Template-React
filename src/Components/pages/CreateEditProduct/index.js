@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func, string, bool } from 'prop-types'
-import { Grid } from 'semantic-ui-react'
+import { Grid } from '@material-ui/core'
 import ModalPageTemplate from '../../templates/ModalPageTemplate'
 import ProductForm from '../../organisms/ProductForm'
 
@@ -14,15 +14,15 @@ const CreateEditProduct = ({
 }) => {
   return (
     <ModalPageTemplate title={title} handleGoBack={handleGoBack}>
-      <Grid centered>
-        <Grid.Column width={8}>
+      <Grid container justify="center">
+        <Grid item xs={6}>
           <ProductForm
             item={item}
             handleAction={handleAction}
             isLoadingAction={isLoadingAction}
             btnContent={btnContent}
           />
-        </Grid.Column>
+        </Grid>
       </Grid>
     </ModalPageTemplate>
   )

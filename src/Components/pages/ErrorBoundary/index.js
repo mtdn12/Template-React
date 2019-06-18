@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { node } from 'prop-types'
+import { Typography } from '@material-ui/core'
 
 import AnnouncementTemplate from '../../templates/AnnouncementTemplate'
 
@@ -21,7 +22,9 @@ class ErrorBoundary extends PureComponent {
     if (this.state.hasError) {
       return (
         <AnnouncementTemplate>
-          Something is wrong here! Please try refresh.
+          <Typography variant="h5" align="center">
+            Something is wrong here! Please try refresh.
+          </Typography>
         </AnnouncementTemplate>
       )
     }

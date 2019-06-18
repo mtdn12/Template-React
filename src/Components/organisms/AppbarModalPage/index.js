@@ -1,29 +1,27 @@
 import React from 'react'
-import { Menu, Icon } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import styles from './styles.module.scss'
+import { withStyles } from '@material-ui/core/styles'
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core'
+import { ArrowBack } from '@material-ui/icons'
+import styles from './styles'
 
-function AppBarModalPage({ handleGoBack, title }) {
+function AppBarModalPage({ classes, handleGoBack, title }) {
   return (
-    <Menu
-      borderless
-      fixed="top"
-      className={styles.appBar}
-      color="blue"
-      inverted>
-      <Menu.Item onClick={handleGoBack}>
-        <Icon name="arrow left" />
-      </Menu.Item>
-      <Menu.Item header as="h4">
-        {title}
-      </Menu.Item>
-    </Menu>
+    <AppBar position="fixed" onClick={handleGoBack}>
+      <Toolbar>
+        <IconButton>
+          <ArrowBack color="inherit" className={classes.icon} />
+        </IconButton>
+        <Typography className={classes.title}>{title}</Typography>
+      </Toolbar>
+    </AppBar>
   )
 }
 
 AppBarModalPage.propTypes = {
   handleGoBack: PropTypes.func,
   title: PropTypes.string,
+  classes: PropTypes.object.isRequired,
 }
 
-export default AppBarModalPage
+export default withStyles(styles)(AppBarModalPage)

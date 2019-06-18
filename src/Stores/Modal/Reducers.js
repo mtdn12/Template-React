@@ -1,8 +1,3 @@
-/**
- * Reducers specify how the application's state changes in response to actions sent to the store.
- *
- * @see https://redux.js.org/basics/reducers
- */
 import { fromJS } from 'immutable'
 
 import { INITIAL_STATE, MODULE_NAME } from './InitialState'
@@ -20,7 +15,7 @@ const setModal = (state, { modalType, modalProps }) =>
     })
   )
 // Clear modal
-const clearModal = (state, action) => state.set('modal', null)
+const clearModal = state => state.set('modal', null)
 
 const reducer = createReducer(INITIAL_STATE, {
   [ModalTypes.SET_MODAL]: setModal,

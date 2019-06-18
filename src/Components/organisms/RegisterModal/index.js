@@ -1,19 +1,44 @@
 import React from 'react'
-import { Modal, Form, Button, Header } from 'semantic-ui-react'
 import { Formik } from 'formik'
 import { func, bool, object } from 'prop-types'
 import * as Yup from 'yup'
-import styles from './styles.module.scss'
-import InputField from '../../atoms/InputField'
+import {
+  Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core'
+import useStyles from './styles'
 
-const RegisterModal = ({ handleClose, isLoadingAction, item }) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
+
+const RegisterModal = ({
+  handleClose,
+  isLoadingAction,
+  item,
+  handleAction,
+}) => {
+  const classes = useStyles()
   return (
-    <Modal onClose={handleClose} size="tiny" open id={styles.registerModal}>
-      <Modal.Header>
-        <Header as="h2" color="blue" inverted textAlign="center">
+    <Dialog
+      open
+      TransitionComponent={Transition}
+      onClose={handleClose}
+      fullWidth
+      maxWidth="sm">
+      <DialogTitle disableTypography>
+        <Typography gutterBottom variant="h5" align="center" color="primary">
+          {' '}
           Register
-        </Header>
-      </Modal.Header>
+        </Typography>
+      </DialogTitle>
       <Formik
         initialValues={item}
         validationSchema={Yup.object().shape({
@@ -28,7 +53,7 @@ const RegisterModal = ({ handleClose, isLoadingAction, item }) => {
             .required('Please input confirm password')
             .oneOf([Yup.ref('password')], 'Password must match'),
         })}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => handleAction(values)}
         render={({
           values,
           errors,
@@ -37,77 +62,105 @@ const RegisterModal = ({ handleClose, isLoadingAction, item }) => {
           touched,
           handleSubmit,
         }) => (
-          <Form onSubmit={handleSubmit}>
-            <Modal.Content className={styles.formContent}>
-              <InputField
-                name="email"
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <TextField
+                id="email"
+                required
+                className={classes.textField}
+                fullWidth
                 value={values.email}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                }}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Email"
                 error={touched.email && Boolean(errors.email)}
-                message={errors.email}
+                helperText={touched.email && errors.email}
+                placeholder="email"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-              <InputField
-                name="name"
+              <TextField
+                id="name"
+                required
+                className={classes.textField}
+                fullWidth
                 value={values.name}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                }}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Name"
                 error={touched.name && Boolean(errors.name)}
-                message={errors.name}
+                helperText={touched.name && errors.name}
+                placeholder="name"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-              <InputField
-                name="password"
+              <TextField
+                id="password"
+                required
+                fullWidth
                 value={values.password}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                  type: 'password',
-                }}
+                className={classes.textField}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Password"
                 error={touched.password && Boolean(errors.password)}
-                message={errors.password}
+                helperText={touched.password && errors.password}
+                placeholder="Password"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-              <InputField
-                name="confirmPassword"
+              <TextField
+                id="confirmPassword"
+                required
+                fullWidth
                 value={values.confirmPassword}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                inputProps={{
-                  fluid: true,
-                  type: 'password',
-                }}
-                label="Confirm Password"
+                className={classes.textField}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="confirm Password"
                 error={
                   touched.confirmPassword && Boolean(errors.confirmPassword)
                 }
-                message={errors.confirmPassword}
+                helperText={touched.confirmPassword && errors.confirmPassword}
+                placeholder="confirm Password"
+                variant="outlined"
+                // InputProps={{
+                //   disableUnderline: true,
+                // }}
               />
-            </Modal.Content>
-            <Modal.Actions className={styles.formAction}>
-              <Button type="button" onClick={handleClose}>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                type="button"
+                onClick={handleClose}
+                variant="contained"
+                fullWidth>
                 Cancel
               </Button>
               <Button
                 type="submit"
-                primary
+                fullWidth
+                variant="contained"
+                color="primary"
                 disabled={isLoadingAction}
-                loading={isLoadingAction}>
+                // loading={isLoadingAction}
+              >
                 Register
               </Button>
-            </Modal.Actions>
-          </Form>
+              {isLoadingAction && (
+                <CircularProgress size={32} className={classes.loadingItem} />
+              )}
+            </DialogActions>
+          </form>
         )}
       />
-    </Modal>
+    </Dialog>
   )
 }
 
@@ -115,6 +168,7 @@ RegisterModal.propTypes = {
   handleClose: func.isRequired,
   isLoadingAction: bool.isRequired,
   item: object.isRequired,
+  handleAction: func.isRequired,
 }
 
 export default RegisterModal

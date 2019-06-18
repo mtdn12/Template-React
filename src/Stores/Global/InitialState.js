@@ -5,14 +5,10 @@ import { Map } from 'immutable'
  */
 export const MODULE_NAME = 'global'
 
+export const createActionName = name => `@@${MODULE_NAME}/${name}`
+
 export const INITIAL_STATE = Map({
-  showHideConfirmDialog: false,
-  showHideConfirmDialogId: 0,
-  isLoadingConfig: false,
-  socialSources: [], // sample data
-  topics: [], // sample data
-  categories: [], // sample data
-  subCategories: [], // sample data
+  data: {},
 })
 
 export default INITIAL_STATE

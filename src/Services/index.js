@@ -1,5 +1,6 @@
 import { create } from 'apisauce'
 import { Config } from 'src/Config'
+import { getToken } from '../Utils/token'
 
 export const apiClient = create({
   /**
@@ -9,6 +10,7 @@ export const apiClient = create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: getToken(),
   },
   timeout: 2000,
 })
