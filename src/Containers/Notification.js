@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { NotificationActions } from 'src/Stores/Notification/Actions'
+import { NotificationActions } from 'Stores/Notification/Actions'
 import '../Stores/Notification/Reducers'
-import Notification from 'src/Components/organisms/Notification'
+import Notification from 'Components/organisms/Notification'
 import { NotificationSelectors } from '../Stores/Notification/Selectors'
 
 const NotificationContainer = props => {

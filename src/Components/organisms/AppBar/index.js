@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { ArrowBack, Menu, AccountCircle } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import styles from './styles'
-import { showTitle } from 'src/Utils/showTitle'
+import { showTitle } from 'Utils/showTitle'
 
 function NavBar({
   match,

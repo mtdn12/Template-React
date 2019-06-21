@@ -2,7 +2,7 @@ import React from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import ModalExample from 'src/Components/pages/ModalExample'
+import ModalExample from 'Components/pages/ModalExample'
 import { ModalActions } from '../Stores/Modal/Actions'
 
 const ModalExampleContainer = ({ handleOpenModal, ...props }) => {

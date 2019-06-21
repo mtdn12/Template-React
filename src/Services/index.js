@@ -1,5 +1,5 @@
 import { create } from 'apisauce'
-import { Config } from 'src/Config'
+import { Config } from 'Config'
 import { getToken } from '../Utils/token'
 
 export const apiClient = create({

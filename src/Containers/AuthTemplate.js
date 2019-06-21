@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { compose } from 'redux'
-import { AuthActions } from 'src/Stores/Authentication/Actions'
+import { AuthActions } from 'Stores/Authentication/Actions'
 import { AuthSelectors } from '../Stores/Authentication/Selectors'
 
-import AuthTemplate from 'src/Components/templates/AuthTemplate'
+import AuthTemplate from 'Components/templates/AuthTemplate'
 
 const AuthTemplateContainer = props => {
   const [isShowDrawer, setShowDrawer] = useState(false)

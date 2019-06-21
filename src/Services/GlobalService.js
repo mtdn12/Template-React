@@ -1,4 +1,4 @@
-import apiClient from '.'
+// import apiClient from '.'
 
 const getGlobalData = () => {
   return new Promise((resolve, reject) => {
@@ -15,8 +15,6 @@ const getGlobalData = () => {
     }, 1000)
   })
 }
-
-console.log(apiClient)
 
 // Get data with apiClient
 // const getGlobalData = () => apiClient.get('/global')

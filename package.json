@@ -1,5 +1,5 @@
 {
-  "name": "template-react",
+  "name": "template-react-v5",
   "version": "0.1.1",
   "private": true,
   "dependencies": {
@@ -10,7 +10,6 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.4.0",
-    "core-js": "^3.0.0",
     "formik": "^1.5.7",
     "history": "^4.7.2",
     "humps": "^2.0.1",
@@ -22,7 +21,6 @@
     "react-dom": "16.8.6",
     "react-google-login": "^3.2.1",
     "react-loadable": "^5.5.0",
-    "react-number-format": "^3.5.2",
     "react-redux": "^7.1.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
@@ -31,8 +29,6 @@
     "redux-persist-transform-immutable": "^5.0.0",
     "redux-saga": "^1.0.3",
     "reduxsauce": "^1.0.1",
-    "shortid": "^2.2.13",
-    "typeface-roboto": "^0.0.54",
     "yup": "^0.27.0"
   },
   "scripts": {
@@ -42,20 +38,21 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "babel-plugin-import": "^1.9.1",
-    "eslint-config-prettier": "^3.1.0",
+    "babel-plugin-import": "^1.12.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-react": "^7.0.2",
-    "eslint-plugin-babel": "^5.2.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.10.0",
-    "prettier": "^1.14.3",
+    "prettier": "^1.15.0",
     "react-scripts": "^3.0.1",
     "standard": "^12.0.1"
   },

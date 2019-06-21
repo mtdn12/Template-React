@@ -1,7 +1,7 @@
 import React from 'react'
 import { node } from 'prop-types'
 
-import Notification from 'src/Containers/Notification'
+import Notification from 'Containers/Notification'
 
 const styles = {
   display: 'flex',

@@ -6,9 +6,9 @@ import {
   all,
   takeEvery,
 } from 'redux-saga/effects'
-import { ProductActions, ProductTypes } from 'src/Stores/Product/Actions'
+import { ProductActions, ProductTypes } from 'Stores/Product/Actions'
 import { ProductSelectors } from './Selectors'
-import { NotificationActions } from 'src/Stores/Notification/Actions'
+import { NotificationActions } from 'Stores/Notification/Actions'
 import { ModalActions } from '../Modal/Actions'
 import { ProductService } from '../../Services/ProductService'
 import { LoadingActions } from '../Loading/Actions'

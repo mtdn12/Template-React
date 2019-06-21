@@ -1,8 +1,8 @@
 import React from 'react'
 import { node, string, func } from 'prop-types'
-import Notification from 'src/Containers/Notification'
+import Notification from 'Containers/Notification'
 import useStyles from './styles'
-import Modal from 'src/Containers/ModalManager'
+import Modal from 'Containers/ModalManager'
 import AppBarModalPage from '../../organisms/AppbarModalPage'
 import { withRouter } from 'react-router-dom'
 

@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Drawer from '../../organisms/Drawer'
 import AppBar from '../../organisms/AppBar'
-import Notification from 'src/Containers/Notification'
+import Notification from 'Containers/Notification'
 import useStyles from './styles'
-import Modal from 'src/Containers/ModalManager'
+import Modal from 'Containers/ModalManager'
 
 const AuthTemplate = ({
   children,

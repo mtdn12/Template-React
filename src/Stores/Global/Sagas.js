@@ -1,6 +1,6 @@
 import { put, call, all, takeLatest } from 'redux-saga/effects'
-import { GlobalActions, GlobalTypes } from 'src/Stores/Global/Actions'
-import { GlobalService } from 'src/Services/GlobalService'
+import { GlobalActions, GlobalTypes } from 'Stores/Global/Actions'
+import { GlobalService } from 'Services/GlobalService'
 
 function* getGlobalDataWorker() {
   try {

@@ -4,14 +4,12 @@ import { createHashHistory } from 'history'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router/immutable'
 import { PersistGate } from 'redux-persist/lib/integration/react'
-import 'core-js'
-import 'typeface-roboto'
 
 import createStore from './Stores/CreateStore.js'
-// import configureStore from './store/configureStore'
+
 import { unregister } from './registerServiceWorker'
-import App from 'src/Components/App'
-// const initialState = Immutable.Map()
+import App from 'Components/App'
+
 const history = createHashHistory()
 
 async function init() {
@@ -32,7 +30,7 @@ async function init() {
       MOUNT_NODE
     )
   if (module.hot) {
-    module.hot.accept('src/Components/App', () => {
+    module.hot.accept('Components/App', () => {
       ReactDOM.unmountComponentAtNode(MOUNT_NODE)
       render()
     })
